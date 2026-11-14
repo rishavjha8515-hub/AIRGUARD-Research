@@ -1,0 +1,7 @@
+{
+  "files_read": 12,
+  "rows_read": 65757,
+  "stations": 9,
+  "raw_data_modified": false,
+  "interpretation": "Flags are review prompts, not confirmed sensor faults."
+}

@@ -1,26 +1,47 @@
-﻿import csv
+import csv
 from pathlib import Path
 from datetime import datetime, timedelta
 from collections import Counter, defaultdict
-from itertools import combinations
 
 ROOT = Path("data/raw/xkdr/2024")
 station_times = defaultdict(set)
+record_counts = Counter()
+invalid_rows = 0
 
 for path in sorted(ROOT.glob("2024-*.csv")):
     with path.open("r", encoding="utf-8-sig", newline="") as f:
         for row in csv.DictReader(f):
-            station = row["station_id"].strip()
-            timestamp = datetime.fromisoformat(row["collected_at"])
+            try:
+                station = row["station_id"].strip()
+                timestamp = datetime.fromisoformat(row["collected_at"])
+            except (KeyError, ValueError, TypeError):
+                invalid_rows += 1
+                continue
+
+            record_counts[(station, timestamp)] += 1
             station_times[station].add(timestamp)
+
+duplicates = {
+    key: count for key, count in record_counts.items() if count > 1
+}
+
+print("========== INPUT VALIDATION ==========")
+print("Unique stations:", len(station_times))
+print("Unique station/timestamp keys:", len(record_counts))
+print("Duplicate station/timestamp keys:", len(duplicates))
+print("Extra duplicate rows:", sum(n - 1 for n in duplicates.values()))
+print("Rows with invalid station/timestamp:", invalid_rows)
+
+for (station, timestamp), count in sorted(duplicates.items()):
+    print(f"DUPLICATE: {station} | {timestamp} | {count} records")
 
 stations = sorted(station_times)
 
-print("========== PAIRWISE SIMULTANEOUS COVERAGE ==========")
-print("Each value = number of timestamps shared by two stations")
+print("\n========== PAIRWISE SIMULTANEOUS COVERAGE ==========")
+print("Each value = number of unique timestamps shared by two stations")
 print(f"{'Station':<14}", end="")
-for s in stations:
-    print(f"{s.replace('site_', ''):>9}", end="")
+for station in stations:
+    print(f"{station.replace('site_', ''):>9}", end="")
 print()
 
 for a in stations:
@@ -32,6 +53,7 @@ for a in stations:
 
 print("\n========== HOURS WITH MULTIPLE STATIONS ==========")
 hour_counts = Counter()
+
 for timestamps in station_times.values():
     hour_counts.update(timestamps)
 
@@ -41,6 +63,7 @@ for n in range(1, len(stations) + 1):
 
 print("\n========== MONTHLY MULTI-STATION COVERAGE ==========")
 monthly = defaultdict(Counter)
+
 for timestamp, count in hour_counts.items():
     monthly[timestamp.strftime("%Y-%m")][count] += 1
 
@@ -55,18 +78,20 @@ for month in sorted(monthly):
     )
 
 print("\n========== LONGEST OBSERVATION GAPS ==========")
+
 for station in stations:
-    ts = sorted(station_times[station])
+    timestamps = sorted(station_times[station])
     gaps = []
-    for previous, current in zip(ts, ts[1:]):
+
+    for previous, current in zip(timestamps, timestamps[1:]):
         delta = current - previous
         if delta > timedelta(hours=1):
             gaps.append((delta, previous, current))
 
     gaps.sort(reverse=True)
     print(f"\n{station}: {len(gaps)} gaps longer than one hour")
+
     for delta, previous, current in gaps[:5]:
         print(f"  {delta}: {previous} -> {current}")
 
 print("\nCoverage analysis complete. Raw files were not modified.")
-

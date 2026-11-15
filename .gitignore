@@ -1,8 +1,21 @@
+﻿# Local data
 data/raw/
 data/processed/
 *.parquet
-*.csv
 *.zip
+
+# Credentials
 .env
-__pycache__/
+.env.*
+!.env.example
+
+# Python
 .venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local review artifacts
+review_bundle.txt

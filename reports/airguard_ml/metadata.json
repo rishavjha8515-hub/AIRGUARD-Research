@@ -1,0 +1,23 @@
+{
+  "training_period_end": "2024-08-31 23:00:00",
+  "test_period_start": "2024-09-01 00:00:00",
+  "test_period_end": "2024-12-31 23:00:00",
+  "training_observations": 43409,
+  "test_observations": 20540,
+  "stations": 9,
+  "features": [
+    "value",
+    "past_median",
+    "past_mad",
+    "robust_deviation",
+    "absolute_change",
+    "change_rate",
+    "repeated_run"
+  ],
+  "ml_candidates": 272,
+  "mad_candidates": 250,
+  "both_methods_flag": 44,
+  "ml_only": 228,
+  "mad_only": 206,
+  "interpretation": "Unsupervised anomaly screening, not confirmed sensor-fault classification. No observations were removed."
+}

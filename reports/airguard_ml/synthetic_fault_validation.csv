@@ -1,0 +1,13 @@
+fault_type,detector,events_injected,injected_observations,detected_events,event_recall,row_recall,untouched_flag_rate,untouched_flag_count,untouched_observations
+isolated_spike,global_flag,8,8,2,0.25,0.25,0.013372664700098328,272,20340
+isolated_spike,station_flag,8,8,6,0.75,0.75,0.020452310717797444,416,20340
+isolated_spike,mad_flag,8,8,8,1.0,1.0,0.012291052114060964,250,20340
+isolated_spike,flatline_flag,8,8,0,0.0,0.0,0.008505408062930186,173,20340
+short_flatline,global_flag,8,96,0,0.0,0.0,0.013430772269405492,272,20252
+short_flatline,station_flag,8,96,0,0.0,0.0,0.02054118111791428,416,20252
+short_flatline,mad_flag,8,96,0,0.0,0.0,0.012344459806438871,250,20252
+short_flatline,flatline_flag,8,96,8,1.0,0.08333333333333333,0.008542366186055698,173,20252
+stuck_at,global_flag,8,384,2,0.25,0.13541666666666666,0.013608164898939363,272,19988
+stuck_at,station_flag,8,384,3,0.375,0.3072916666666667,0.020812487492495497,416,19988
+stuck_at,mad_flag,8,384,0,0.0,0.0,0.012307384430658395,246,19988
+stuck_at,flatline_flag,8,384,8,1.0,0.7708333333333334,0.008655193115869523,173,19988

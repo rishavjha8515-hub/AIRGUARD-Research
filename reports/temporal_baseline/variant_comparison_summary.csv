@@ -1,0 +1,4 @@
+variant,eligible_observations,candidate_count,candidate_rate_percent,overlap_with_original
+A_original,63547,628,0.982,628
+B_scale_floor,63949,674,1.054,598
+C_absolute_filter,63949,354,0.5536,354

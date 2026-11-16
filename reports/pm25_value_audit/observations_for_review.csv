@@ -1,0 +1,2 @@
+station_id,collected_at,value,unit,source_file,review_reason
+site_5119,2024-07-07 14:00:00,985.0,µg/m³,2024-07.csv,"above 500; review, not automatically invalid"
